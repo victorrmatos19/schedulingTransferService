@@ -2,8 +2,7 @@ package br.com.cvc.scheduling.transfer.service.model;
 
 import lombok.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 /**
@@ -12,27 +11,36 @@ import java.time.LocalDate;
  * @author Victor Rodrigues de Matos
  */
 
-@Data
+
+@Entity
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "Transfer")
 public class Transfer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "rate", nullable = false)
     private Double rate;
 
-    private LocalDate schedulingDate;
-
-    @NotNull(message = "{value.not.null}")
+    @Column(name = "value", nullable = false)
     private Double value;
 
-    @NotNull(message = "{transferDate.not.null}")
+    @Column(name = "transfer_date", nullable = false)
     private LocalDate transferDate;
 
-    @Valid
-    @NotNull(message = "{targetAccount.not.null}")
-    private Account targetAccount;
+    @Column(name = "target_account", nullable = false)
+    private String targetAccount;
 
-    @Valid
-    @NotNull(message = "{sourceAccount.not.null}")
-    private Account sourceAccount;
+    @Column(name = "source_account", nullable = false)
+    private String sourceAccount;
+
+    @Column(name = "scheduling_date", nullable = false)
+    private LocalDate schedulingDate;
 
 }
