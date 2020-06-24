@@ -19,7 +19,7 @@ import java.util.Map;
 @CrossOrigin("*")
 public class HealthController {
 
-    @GetMapping(value = "/health")
+    @GetMapping(value = "/transfer//health")
     public ResponseEntity<Map<String, String>> check() {
         HashMap<String, String> healthBody = new HashMap<>();
         healthBody.put("status", "UP");
