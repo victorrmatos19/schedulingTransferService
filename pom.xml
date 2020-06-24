@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.cvc</groupId>
 	<artifactId>scheduling.transfer.service</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.4-SNAPSHOT</version>
 	<name>Scheduling Transfer Service</name>
 	<description>Demo project for Spring Boot</description>
 
