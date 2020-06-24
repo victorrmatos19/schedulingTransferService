@@ -4,6 +4,8 @@ import br.com.cvc.scheduling.transfer.model.Transfer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Transfer Repository
  *
@@ -11,4 +13,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TransferRepository extends JpaRepository<Transfer,Long> {
+
+    List<Transfer> findAllBySourceAccount(String sourceAccount);
 }

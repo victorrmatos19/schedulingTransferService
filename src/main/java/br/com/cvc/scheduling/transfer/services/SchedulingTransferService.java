@@ -48,7 +48,11 @@ public class SchedulingTransferService {
         return transferRepository.save(transfer);
     }
 
-    public List<Transfer> findAll(){
+    public List<Transfer> findAllTransfers(){
         return transferRepository.findAll();
+    }
+
+    public List<Transfer> listTransfersBySourceAccount(String sourceAccount){
+        return transferRepository.findAllBySourceAccount(sourceAccount);
     }
 }
