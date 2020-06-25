@@ -21,7 +21,7 @@ public class HealthControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    private String RESOURCE_PATH = "/health";
+    private String RESOURCE_PATH = "/transfer/health";
 
     @Test
     @DisplayName("check.1: should check health")
