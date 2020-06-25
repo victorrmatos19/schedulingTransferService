@@ -1,4 +1,4 @@
-package br.com.cvc.scheduling.transfer.service;
+package br.com.cvc.scheduling.transfer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

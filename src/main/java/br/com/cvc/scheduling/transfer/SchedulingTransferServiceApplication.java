@@ -1,4 +1,4 @@
-package br.com.cvc.scheduling.transfer.service;
+package br.com.cvc.scheduling.transfer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
