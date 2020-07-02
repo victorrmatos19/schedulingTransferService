@@ -7,8 +7,10 @@ import br.com.cvc.scheduling.transfer.repository.TransferRepository;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -20,7 +22,9 @@ import java.util.List;
 @Slf4j
 @Setter
 @Service
-public class SchedulingTransferService {
+public class SchedulingTransferService implements Serializable {
+
+    private static final long serialVersionUID = 7156526077883281623L;
 
     @Autowired
     private RateService rateService;
@@ -48,10 +52,12 @@ public class SchedulingTransferService {
         return transferRepository.save(transfer);
     }
 
+    @CacheEvict(cacheNames = "allTransfers", key ="#root.method.name", allEntries = true)
     public List<Transfer> findAllTransfers(){
         return transferRepository.findAll();
     }
 
+    @CacheEvict(cacheNames = "TransfersByAccount", key ="#root.method.name", allEntries = true)
     public List<Transfer> listTransfersBySourceAccount(String sourceAccount){
         return transferRepository.findAllBySourceAccount(sourceAccount);
     }
