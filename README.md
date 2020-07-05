@@ -15,7 +15,6 @@ Program responsible for scheduling financial transfers
 
 ```
 Considerations:
-- FakeDataBase Class: This class aims to only popularize the database.
 - Rates: I preferred to consult the rates in the database to avoid over coding, even using the Strategy pattern the work would be unproductive.
 ```
 
@@ -25,12 +24,14 @@ Instructions:
 Redis:
 - Execute the command on terminal to run Redis container: docker run -p 6379:6379 --name redis -d redis:5.0.3
 MySql:
-- Execute the command on terminal to run Redis container: docker run -p 3306:3306 --name container-mysql -e MYSQL_USER=user-root -e MYSQL_PASSWORD=senha-mysql -e MYSQL_DATABASE=mydb -e MYSQL_ROOT_PASSWORD=root -d mysql/mysql-server:5.6
+- Execute the command on terminal to run MySQL container: docker run -p 3306:3306 --name container-mysql -e MYSQL_USER=user-root -e MYSQL_PASSWORD=senha-mysql -e MYSQL_DATABASE=mydb -e MYSQL_ROOT_PASSWORD=root -d mysql/mysql-server:5.6
+- Execute the command on terminal to run MySQL bash: docker exec -it container-mysql bash
+- In the terminal type : "mysql -uroot -p", type password "root" and run the script contained in the 'script.sql" file
 
 *Ps: Make sure you have docker installed*
 
 - Clone repository in your machine. Use the command on terminal: git clone https://github.com/victorrmatos19/githubinterface.git
-- Open project in your IDE, execute the commando on terminal: mvn clean install
+- Open project in your IDE, execute the command on terminal: mvn clean install
 - Run project.
 
 *Ps: Make sure you have Maven and Git installed*
