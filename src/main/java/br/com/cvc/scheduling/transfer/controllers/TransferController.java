@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @RestController
@@ -35,7 +34,8 @@ public class TransferController {
 
     @ApiOperation(value = "List all transfers")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success")
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
     })
     @GetMapping("/listAllTransfers")
     public ResponseEntity<List<Transfer>> listAllTransfers(){
@@ -44,7 +44,8 @@ public class TransferController {
 
     @ApiOperation(value = "List transfers by source account")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success")
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
     })
     @GetMapping("/listTransfersBySourceAccount")
     public ResponseEntity<List<Transfer>> listTransfersBySourceAccount(@Param("sourceAccount") String sourceAccount){
