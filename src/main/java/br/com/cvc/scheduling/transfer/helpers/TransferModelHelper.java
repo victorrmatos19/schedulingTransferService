@@ -21,28 +21,28 @@ import java.time.temporal.ChronoUnit;
 @Service
 public class TransferModelHelper {
 
-    public void verifyIfTransferValueIsZero(Double transferValue){
+    public static void verifyIfTransferValueIsZero(Double transferValue){
         log.info("TransferModelHelper:{} verifyIfTransferValueIsZero...");
         if(transferValue == 0){
             throw new TransferBusinessException(HttpStatus.BAD_REQUEST, TransferErrorsEnum.TRANSFER_VALUE_IS_ZERO);
         }
     }
 
-    public void verifyIfFinalDateIsLessThanInitialDate(LocalDate initialDate, LocalDate finalDate){
+    public static void verifyIfFinalDateIsLessThanInitialDate(LocalDate initialDate, LocalDate finalDate){
         log.info("TransferModelHelper:{} verifyIfFinalDateIsLessThanInitialDate...");
         if(getBetweenIntervalDates(initialDate,finalDate) < 0){
             throw new TransferBusinessException(HttpStatus.BAD_REQUEST, TransferErrorsEnum.INVALID_DATE);
         }
     }
 
-    public void verifyIfAccountsNumbersAreTheSame(String sourceAccount, String targetAccount){
+    public static void verifyIfAccountsNumbersAreTheSame(String sourceAccount, String targetAccount){
         log.info("TransferModelHelper:{} verifyIfAccountsNumbersAreTheSame...");
         if(sourceAccount.equalsIgnoreCase(targetAccount)){
             throw new TransferBusinessException(HttpStatus.BAD_REQUEST, TransferErrorsEnum.ACCOUNTS_NUMBER_ARE_EQUALS);
         }
     }
 
-    public Transfer converteTransferDTOtoTransfer(TransferDTO transferDTO){
+    public static Transfer converteTransferDTOtoTransfer(TransferDTO transferDTO){
         return Transfer.builder()
                 .schedulingDate(LocalDate.now())
                 .sourceAccount(transferDTO.getSourceAccount())
@@ -52,7 +52,7 @@ public class TransferModelHelper {
                 .build();
     }
 
-    public long getBetweenIntervalDates(LocalDate initialDate, LocalDate finalDate){
+    public static long getBetweenIntervalDates(LocalDate initialDate, LocalDate finalDate){
        return ChronoUnit.DAYS.between( initialDate , finalDate );
     }
 
