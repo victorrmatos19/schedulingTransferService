@@ -1,0 +1,18 @@
+version: "3"
+services:
+  container-mysql:
+    container_name: container-mysql
+    image: mysql/mysql-server:5.6
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_USER=user-root
+      - MYSQL_PASSWORD=senha-mysql
+      - MYSQL_DATABASE=mydb
+      - MYSQL_ROOT_PASSWORD=root
+  redis:
+    container_name: redis
+    image: redis:5.0.3
+    ports:
+      - 6379:6379
+
