@@ -21,10 +21,10 @@ Considerations:
 ```
 Instructions:
 
-Redis:
-- Execute the command on terminal to run Redis container: docker run -p 6379:6379 --name redis -d redis:5.0.3
+Redis and MySql:
+- Execute the command on terminal to run Redis and MySql: docker-compose up
+*Ps: At the root of the project*
 MySql:
-- Execute the command on terminal to run MySQL container: docker run -p 3306:3306 --name container-mysql -e MYSQL_USER=user-root -e MYSQL_PASSWORD=senha-mysql -e MYSQL_DATABASE=mydb -e MYSQL_ROOT_PASSWORD=root -d mysql/mysql-server:5.6
 - Execute the command on terminal to run MySQL bash: docker exec -it container-mysql bash
 - In the terminal type : "mysql -uroot -p", type password "root" and run the script contained in the 'script.sql" file
 
