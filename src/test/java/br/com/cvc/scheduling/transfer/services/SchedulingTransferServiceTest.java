@@ -1,9 +1,10 @@
 package br.com.cvc.scheduling.transfer.services;
 
-import br.com.cvc.scheduling.transfer.helpers.TransferModelHelper;
+import br.com.cvc.scheduling.transfer.exceptions.TransferBusinessException;
 import br.com.cvc.scheduling.transfer.model.Transfer;
 import br.com.cvc.scheduling.transfer.model.dto.TransferDTO;
 import br.com.cvc.scheduling.transfer.repository.TransferRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,21 +37,17 @@ public class SchedulingTransferServiceTest {
     private TransferRepository transferRepository;
 
     @InjectMocks
-    private TransferModelHelper transferModelHelper;
-
-    @InjectMocks
     private SchedulingTransferService schedulingTransferService;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        schedulingTransferService.setTransferModelHelper(transferModelHelper);
     }
 
     @Test
     @DisplayName("1.save: Save transfer on DB with success")
     public void saveWithSuccess(){
-        TransferDTO transferDTO = createTransferDTO();
+        TransferDTO transferDTO = buildTransferDTO();
 
         when(rateService.calculateRateByTransfer(any())).thenReturn(100.00);
         when(transferRepository.save(any())).thenReturn(createTransfer());
@@ -61,7 +58,19 @@ public class SchedulingTransferServiceTest {
     }
 
     @Test
-    @DisplayName("2.findAllTransfers: List all transfers with success")
+    @DisplayName("2.save: Save transfer on DB with error by account")
+    public void saveWithErrorByAccount(){
+        TransferDTO transferDTO = buildInvalidAccountTransferDTO();
+
+        when(rateService.calculateRateByTransfer(any())).thenReturn(100.00);
+
+        Assertions.assertThrows(TransferBusinessException.class, () -> {
+            schedulingTransferService.save(transferDTO);
+        });
+    }
+
+    @Test
+    @DisplayName("3.findAllTransfers: List all transfers with success")
     public void findAllTransfersWithSuccess(){
         when(transferRepository.findAll()).thenReturn(Arrays.asList());
 
@@ -71,7 +80,19 @@ public class SchedulingTransferServiceTest {
     }
 
     @Test
-    @DisplayName("3.listTransfersBySourceAccount: List transfers by  with success")
+    @DisplayName("4.save: Save transfer on DB with error by value")
+    public void saveWithErrorByValue(){
+        TransferDTO transferDTO = buildInvalidValueransferDTO();
+
+        when(rateService.calculateRateByTransfer(any())).thenReturn(100.00);
+
+        Assertions.assertThrows(TransferBusinessException.class, () -> {
+            schedulingTransferService.save(transferDTO);
+        });
+    }
+
+    @Test
+    @DisplayName("5.listTransfersBySourceAccount: List transfers by  with success")
     public void listTransfersBySourceAccountWithSuccess(){
         when(transferRepository.findAllBySourceAccount(anyString())).thenReturn(Arrays.asList());
 
@@ -82,12 +103,52 @@ public class SchedulingTransferServiceTest {
         assertNotNull(transfers);
     }
 
+    @Test
+    @DisplayName("6.save: Save transfer on DB with error by date")
+    public void saveWithErrorByDate(){
+        TransferDTO transferDTO = buildInvalidDateTransferDTO();
+
+        when(rateService.calculateRateByTransfer(any())).thenReturn(100.00);
+
+        Assertions.assertThrows(TransferBusinessException.class, () -> {
+            schedulingTransferService.save(transferDTO);
+        });
+    }
+
 
     private Transfer createTransfer() {
         return Transfer.builder().build();
     }
 
-    private TransferDTO createTransferDTO() {
+    private TransferDTO buildInvalidValueransferDTO() {
+        return TransferDTO.builder()
+                .sourceAccount("1234")
+                .targetAccount("4321")
+                .transferDate(LocalDate.now().plusDays(10))
+                .value(0.0)
+                .build();
+    }
+
+    private TransferDTO buildInvalidDateTransferDTO() {
+        return TransferDTO.builder()
+                .sourceAccount("1234")
+                .targetAccount("4321")
+                .transferDate(LocalDate.now().minusDays(19))
+                .value(100.00)
+                .build();
+    }
+
+
+    private TransferDTO buildInvalidAccountTransferDTO() {
+        return TransferDTO.builder()
+                .sourceAccount("1234")
+                .targetAccount("1234")
+                .transferDate(LocalDate.now().plusDays(10))
+                .value(100.00)
+                .build();
+    }
+
+    private TransferDTO buildTransferDTO() {
         return TransferDTO.builder()
                 .sourceAccount("1234")
                 .targetAccount("4321")
