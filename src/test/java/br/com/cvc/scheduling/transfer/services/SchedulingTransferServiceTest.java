@@ -117,7 +117,7 @@ public class SchedulingTransferServiceTest {
 
 
     private Transfer createTransfer() {
-        return Transfer.builder().build();
+        return new Transfer();
     }
 
     private TransferDTO buildInvalidValueransferDTO() {

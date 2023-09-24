@@ -60,12 +60,14 @@ public class SchedulingTransferService implements Serializable {
     }
 
     private Transfer converteTransferDTOtoTransfer(TransferDTO transferDTO){
-        return Transfer.builder()
-                .schedulingDate(LocalDate.now())
-                .sourceAccount(transferDTO.getSourceAccount())
-                .targetAccount(transferDTO.getTargetAccount())
-                .transferDate(transferDTO.getTransferDate())
-                .value(transferDTO.getValue())
-                .build();
+        return new Transfer(
+                null,
+                null,
+                transferDTO.getValue(),
+                transferDTO.getTransferDate(),
+                transferDTO.getTargetAccount(),
+                transferDTO.getSourceAccount(),
+                LocalDate.now()
+        );
     }
 }

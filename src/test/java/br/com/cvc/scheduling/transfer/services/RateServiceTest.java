@@ -5,6 +5,7 @@ import br.com.cvc.scheduling.transfer.helpers.TransferModelHelper;
 import br.com.cvc.scheduling.transfer.model.Rate;
 import br.com.cvc.scheduling.transfer.model.Transfer;
 import br.com.cvc.scheduling.transfer.model.dto.ErrorResponseDTO;
+import br.com.cvc.scheduling.transfer.model.dto.TransferDTO;
 import br.com.cvc.scheduling.transfer.model.enumerator.TransferErrorsEnum;
 import br.com.cvc.scheduling.transfer.repository.RateRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -139,11 +140,15 @@ public class RateServiceTest {
     }
 
     private Transfer createTransfer(Double value, Long afterDays){
-        return Transfer.builder()
-                    .schedulingDate(LocalDate.now())
-                    .value(value)
-                    .transferDate(LocalDate.now().plusDays(afterDays))
-                .build();
+        return new Transfer(
+                null,
+                null,
+                value,
+                LocalDate.now().plusDays(afterDays),
+                null,
+                null,
+                LocalDate.now()
+        );
     }
 
     public void testErrors(HttpStatus status, TransferErrorsEnum transferErrorsEnum,
@@ -157,13 +162,19 @@ public class RateServiceTest {
     private List<Rate> getAllRates(){
         List<Rate> rates = new ArrayList<>();
 
-        rates.add(Rate.builder().type("A").minInterval(Long.valueOf(0)).maxInterval(Long.valueOf(0)).percent(0.03).value(3.0).build());
-        rates.add(Rate.builder().type("B").minInterval(Long.valueOf(1)).maxInterval(Long.valueOf(10)).value(12.0).build());
-        rates.add(Rate.builder().type("C").minInterval(Long.valueOf(11)).maxInterval(Long.valueOf(20)).percent(0.08).build());
-        rates.add(Rate.builder().type("C").minInterval(Long.valueOf(21)).maxInterval(Long.valueOf(30)).percent(0.06).build());
-        rates.add(Rate.builder().type("C").minInterval(Long.valueOf(31)).maxInterval(Long.valueOf(40)).percent(0.04).build());
-        rates.add(Rate.builder().type("C").minInterval(Long.valueOf(41)).percent(0.02).valueLimit(100000.0).build());
+        rates.add(buildRate("A",0L, 0L, 0.03, 3.0, null));
+        rates.add(buildRate("B",1L, 10L, null, 12.0,  null));
+        rates.add(buildRate("C",11L, 20L, 0.08, null,  null));
+        rates.add(buildRate("C",21L, 30L, 0.06, null,  null));
+        rates.add(buildRate("C",31L, 40L, 0.04, null,  null));
+        rates.add(buildRate("C",41L, null, 0.02, null,  100000.0));
 
         return rates;
     }
+
+    private Rate buildRate(String type, Long minInterval, Long maxInterval, Double percent, Double value, Double
+                            valueLimit){
+        return new Rate(1L,type, minInterval, maxInterval, percent, value, valueLimit);
+    }
+
 }
